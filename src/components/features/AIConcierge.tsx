@@ -17,17 +17,17 @@ export function AIConcierge() {
     const [chatInput, setChatInput] = useState("");
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    const { messages, append, status, setMessages, error }: any = useChat({
+    const { messages, append, status, setMessages, error, input, handleInputChange, handleSubmit }: any = useChat({
         api: "/api/chat",
         initialMessages: [
             {
                 id: "welcome",
                 role: "assistant",
-                content: "안녕하세요! 모든 통신 연결이 최적화되었습니다. 무엇을 도와드릴까요?",
+                content: "안녕하세요! Nam Hyeongseog(AZERC)의 포트폴리오에 오신 것을 환영합니다. 무엇을 도와드릴까요?",
             },
         ] as any,
         onError: (err: Error) => {
-            console.error("Chat Error:", err);
+            console.error("AI Chat Error:", err);
         }
     } as any);
 
@@ -40,7 +40,10 @@ export function AIConcierge() {
         const userMessage = chatInput;
         setChatInput("");
         try {
-            await append({ role: 'user', content: userMessage });
+            await append({
+                role: 'user',
+                content: userMessage
+            });
         } catch (err: any) {
             console.error("Send Message Error:", err);
         }
@@ -55,7 +58,10 @@ export function AIConcierge() {
 
     useEffect(() => {
         if (scrollRef.current) {
-            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+            const scrollContainer = scrollRef.current.querySelector('[data-radix-scroll-area-viewport]');
+            if (scrollContainer) {
+                scrollContainer.scrollTop = scrollContainer.scrollHeight;
+            }
         }
     }, [messages, isLoading]);
 
@@ -88,7 +94,7 @@ export function AIConcierge() {
                                     <Button
                                         size="icon"
                                         variant="ghost"
-                                        onClick={() => setMessages([{ id: "welcome", role: "assistant", content: "안녕하세요! 모든 통신 연결이 최적화되었습니다. 무엇을 도와드릴까요?" }])}
+                                        onClick={() => setMessages([{ id: "welcome", role: "assistant", content: "안녕하세요! Nam Hyeongseog(AZERC)의 포트폴리오에 오신 것을 환영합니다. 무엇을 도와드릴까요?" }])}
                                         className="h-8 w-8 rounded-full text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100"
                                     >
                                         <RefreshCcw size={14} />
@@ -105,8 +111,8 @@ export function AIConcierge() {
                             </CardHeader>
 
                             <CardContent className="p-0 h-[480px] bg-white text-zinc-900">
-                                <ScrollArea className="h-full px-4 py-6" viewportRef={scrollRef}>
-                                    <div className="flex flex-col gap-8">
+                                <ScrollArea className="h-full px-4 py-6" ref={scrollRef}>
+                                    <div className="flex flex-col gap-6">
                                         {messages.map((msg: any) => (
                                             <div
                                                 key={msg.id}
@@ -125,9 +131,9 @@ export function AIConcierge() {
                                                 </div>
                                                 <div
                                                     className={cn(
-                                                        "max-w-[85%] text-[14px] leading-[1.6]",
+                                                        "max-w-[85%] text-[14px] leading-[1.6] whitespace-pre-wrap",
                                                         msg.role === "user"
-                                                            ? "bg-zinc-100 text-zinc-900 font-bold p-3.5 rounded-2xl rounded-tr-none border border-zinc-200"
+                                                            ? "bg-zinc-100 text-zinc-900 font-semibold p-3.5 rounded-2xl rounded-tr-none border border-zinc-200"
                                                             : "text-zinc-800 py-1 font-medium"
                                                     )}
                                                 >
@@ -140,16 +146,17 @@ export function AIConcierge() {
                                                 <div className="w-8 h-8 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center shrink-0">
                                                     <Bot size={14} className="text-white" />
                                                 </div>
-                                                <div className="flex items-center gap-1.5 py-2">
-                                                    <span className="w-1.5 h-1.5 bg-zinc-300 rounded-full animate-bounce" />
-                                                    <span className="w-1.5 h-1.5 bg-zinc-300 rounded-full animate-bounce [animation-delay:0.2s]" />
-                                                    <span className="w-1.5 h-1.5 bg-zinc-300 rounded-full animate-bounce [animation-delay:0.4s]" />
+                                                <div className="flex items-center gap-1.5 py-4">
+                                                    <span className="w-1.5 h-1.5 bg-zinc-400 rounded-full animate-bounce [animation-duration:1000ms]" />
+                                                    <span className="w-1.5 h-1.5 bg-zinc-400 rounded-full animate-bounce [animation-duration:1000ms] [animation-delay:200ms]" />
+                                                    <span className="w-1.5 h-1.5 bg-zinc-400 rounded-full animate-bounce [animation-duration:1000ms] [animation-delay:400ms]" />
                                                 </div>
                                             </div>
                                         )}
                                         {error && (
-                                            <div className="p-3 bg-red-50 text-red-600 text-xs rounded-xl border border-red-100">
-                                                오류: {error.message}
+                                            <div className="p-4 bg-red-50 text-red-600 text-xs rounded-2xl border border-red-100 flex flex-col gap-1">
+                                                <span className="font-bold uppercase tracking-wider text-[10px]">Connection Error</span>
+                                                <span>{error.message || "AI 서버와 연결할 수 없습니다. 잠시 후 다시 시도해 주세요."}</span>
                                             </div>
                                         )}
                                     </div>

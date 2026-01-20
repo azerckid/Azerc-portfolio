@@ -1,35 +1,57 @@
-import { google } from '@ai-sdk/google';
-import { streamText } from 'ai';
+import { streamText, smoothStream } from "ai";
+import { google } from "@ai-sdk/google";
+import knowledgeBase from "@/lib/knowledge.json";
 
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  const { messages } = await req.json();
+  try {
+    const { messages: rawMessages } = await req.json();
 
-  const result = streamText({
-    model: google('gemini-2.0-flash-exp'),
-    system: `
-      You are the AI Concierge for AZERC's (Nam Hyeongseog) professional portfolio.
-      Your goal is to guide visitors through the portfolio and answer questions about Nam's expertise, projects, and technical skills.
+    console.log(`[API Chat] Received request. Messages: ${rawMessages?.length}`);
 
-      Context about AZERC (Nam Hyeongseog):
-      - Expertise: Full-Stack Developer specializing in AI (LLM integration/Agents), Blockchain (Web3/Solidity), and 3D Graphics (Three.js/WebGL).
-      - Core Philosphy: "The Nexus of Innovation" - Integrating cutting-edge technologies into robust, premium applications.
-      - Key Projects:
-        1. Three.js Graphics Lab: Advanced WebGL/3D engine demonstrations.
-        2. AI Agent Choonsim: Intelligent chatbot implementation with seamless UX.
-        3. BondBase: Transparent ESG investment platform using blockchain.
-        4. C-Stay Blog: High-performance content platform using Next.js 15.
-      - Tech Stack: Next.js 15, React Router v7, TypeScript, Tailwind CSS v4, Framer Motion, Three.js, Solidity, Drizzle ORM, Zod.
+    if (!rawMessages || !Array.isArray(rawMessages)) {
+      return new Response(JSON.stringify({ error: "Messages are required" }), { status: 400 });
+    }
 
-      Style & Tone:
-      - Professional, tech-savvy, helpful, and concise.
-      - Use a premium and futuristic tone consistent with the portfolio's design.
-      - Answer in the same language as the user (Korean or English).
-      - If users ask about specific projects, highlight the technical challenges and outcomes.
-    `,
-    messages,
-  });
+    // Use pre-bundled knowledge from JSON
+    const context = (knowledgeBase as any[]).map(item => {
+      return `\n--- SOURCE: ${item.source} ---\n${item.content}\n`;
+    }).join("\n");
 
-  return (result as any).toDataStreamResponse();
+    const systemPrompt = `
+      You are the "AZERC AI Concierge", a sophisticated assistant for Nam Hyeongseog's professional portfolio.
+      
+      Your personality: Professional, encouraging, and deeply technical yet accessible.
+      
+      Your knowledge base is strictly limited to the provided context about Nam Hyeongseog (AZERC). When answering:
+      1. Use specific technical details (Next.js 15, Three.js, Solidity, AI Agents) found in the context.
+      2. If asked about "BondBase", explain the flow from Faucet -> Bond Market -> Invest.
+      3. If asked about technical skills, highlight the "Nexus of Innovation" concept.
+      4. Always respond in a way that feels premium and futuristic.
+      
+      CRITICAL:
+      - If the information is not in the context, clearly state that you don't have that specific data but suggest they contact Nam directly.
+      - Use Markdown for beautiful formatting (tables, lists, bold text).
+      - Always respond as an AI Concierge who is here to guide visitors through AZERC's digital legacy.
+
+      Context from Portfolio Database:
+      ${context}
+    `;
+
+    const result = streamText({
+      model: google("gemini-2.0-flash-exp"),
+      system: systemPrompt,
+      messages: rawMessages,
+      experimental_transform: smoothStream({ delayInMs: 20 }),
+    });
+
+    return (result as any).toDataStreamResponse();
+  } catch (error: any) {
+    console.error("[API Chat Error]:", error);
+    return new Response(JSON.stringify({ error: error.message || "Internal Server Error" }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
 }

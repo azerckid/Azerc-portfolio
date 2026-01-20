@@ -1,0 +1,30 @@
+[
+    {
+        "source": "AZERC (Nam Hyeongseog) Profile",
+        "content": "Nam Hyeongseog, also known as AZERC, is a Full-Stack Developer specializing in the Nexus of Innovation: integrating AI Agents, Blockchain transparency, and Interactive 3D Engines. He focuses on building robust, premium applications that push technical boundaries."
+    },
+    {
+        "source": "Technical Expertise",
+        "content": "Core skills include: AI (LLM integration, Agentic workflows using AI SDK), Blockchain (Web3, Solidity, Smart Contracts, ESG platforms), and 3D Graphics (Three.js, WebGL, Shader programming). Tech stack: Next.js 15, React, TypeScript, Tailwind CSS v4, Framer Motion, Drizzle ORM, Zod, Luxon."
+    },
+    {
+        "source": "Project: Three.js Graphics Lab",
+        "content": "A laboratory for advanced WebGL and 3D engine demonstrations. It showcases high-performance rendering, complex geometry, and interactive 3D environments built with Three.js and custom shaders."
+    },
+    {
+        "source": "Project: AI Agent Choonsim",
+        "content": "An intelligent chatbot implementation designed with seamless UX. It utilizes advanced LLM integrations to provide context-aware responses and interactive user experiences."
+    },
+    {
+        "source": "Project: BondBase",
+        "content": "A transparent ESG (Environmental, Social, and Governance) investment platform built on blockchain. It uses Creditcoin for RWA (Real World Asset) investments, featuring 'Hold to Earn' and reinvestment (compounding) mechanics. Contract addresses and chain details are managed via Creditcoin mainnet/testnet."
+    },
+    {
+        "source": "Project: C-Stay Blog",
+        "content": "A high-performance content platform built using Next.js 15, optimized for SEO, speed, and premium readability."
+    },
+    {
+        "source": "Investment Flow (BondBase)",
+        "content": "The investment process in BondBase follows a structured flow: 1. Faucet (for test assets) -> 2. Bond Market exploration -> 3. Investment execution. Users can track their portfolio and impact map."
+    }
+]
