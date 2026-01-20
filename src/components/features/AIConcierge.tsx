@@ -17,7 +17,7 @@ export function AIConcierge() {
     const [chatInput, setChatInput] = useState("");
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    const { messages, append, status, setMessages, error, input, handleInputChange, handleSubmit }: any = useChat({
+    const chatResult = useChat({
         api: "/api/chat",
         initialMessages: [
             {
@@ -25,11 +25,34 @@ export function AIConcierge() {
                 role: "assistant",
                 content: "안녕하세요! Nam Hyeongseog(AZERC)의 포트폴리오에 오신 것을 환영합니다. 무엇을 도와드릴까요?",
             },
-        ] as any,
-        onError: (err: Error) => {
+        ],
+        onError: (err) => {
             console.error("AI Chat Error:", err);
+            console.error("AI Chat Error Details:", {
+                message: err.message,
+                cause: err.cause,
+                stack: err.stack
+            });
+        },
+        onResponse: (response) => {
+            console.log("AI Chat Response Status:", response.status);
+            if (!response.ok) {
+                console.error("AI Chat Response Error:", response.statusText);
+            }
         }
-    } as any);
+    });
+
+    const { 
+        messages, 
+        sendMessage,
+        status, 
+        setMessages, 
+        error,
+        input,
+        setInput,
+        handleInputChange,
+        handleSubmit,
+    } = chatResult;
 
     const isLoading = status === "submitted" || status === "streaming";
 
@@ -37,15 +60,41 @@ export function AIConcierge() {
         e?.preventDefault();
         if (!chatInput.trim() || isLoading) return;
 
-        const userMessage = chatInput;
+        const userMessage = chatInput.trim();
         setChatInput("");
+        
         try {
-            await append({
-                role: 'user',
-                content: userMessage
-            });
+            // Use sendMessage (AI SDK v6+)
+            if (sendMessage && typeof sendMessage === 'function') {
+                await sendMessage({ text: userMessage });
+            }
+            // Fallback: use input + handleSubmit pattern
+            else if (setInput && typeof setInput === 'function' && handleSubmit && typeof handleSubmit === 'function') {
+                setInput(userMessage);
+                // Create a synthetic form event for handleSubmit
+                const syntheticEvent = {
+                    preventDefault: () => {},
+                    currentTarget: document.createElement('form'),
+                } as unknown as React.FormEvent<HTMLFormElement>;
+                
+                handleSubmit(syntheticEvent);
+            }
+            else {
+                console.error("No valid method to send message. useChat returned:", {
+                    hasSendMessage: typeof sendMessage === 'function',
+                    hasHandleSubmit: typeof handleSubmit === 'function',
+                    hasSetInput: typeof setInput === 'function',
+                    allKeys: Object.keys(chatResult),
+                });
+                throw new Error("Chat function is not available. Please refresh the page.");
+            }
         } catch (err: any) {
             console.error("Send Message Error:", err);
+            console.error("Send Message Error Details:", {
+                message: err.message,
+                cause: err.cause,
+                stack: err.stack
+            });
         }
     };
 
@@ -137,7 +186,21 @@ export function AIConcierge() {
                                                             : "text-zinc-800 py-1 font-medium"
                                                     )}
                                                 >
-                                                    {msg.content}
+                                                    {(() => {
+                                                        // Handle different message formats (AI SDK v6)
+                                                        if (msg.content && typeof msg.content === 'string') {
+                                                            return msg.content;
+                                                        }
+                                                        // Handle parts array format
+                                                        if (msg.parts && Array.isArray(msg.parts)) {
+                                                            return msg.parts
+                                                                .filter((part: any) => part.type === 'text' && part.text)
+                                                                .map((part: any) => part.text)
+                                                                .join('');
+                                                        }
+                                                        // Fallback
+                                                        return msg.content || '';
+                                                    })()}
                                                 </div>
                                             </div>
                                         ))}
@@ -154,9 +217,16 @@ export function AIConcierge() {
                                             </div>
                                         )}
                                         {error && (
-                                            <div className="p-4 bg-red-50 text-red-600 text-xs rounded-2xl border border-red-100 flex flex-col gap-1">
+                                            <div className="p-4 bg-red-50 text-red-600 text-xs rounded-2xl border border-red-100 flex flex-col gap-2">
                                                 <span className="font-bold uppercase tracking-wider text-[10px]">Connection Error</span>
-                                                <span>{error.message || "AI 서버와 연결할 수 없습니다. 잠시 후 다시 시도해 주세요."}</span>
+                                                <span className="leading-relaxed">
+                                                    {error.message || "AI 서버와 연결할 수 없습니다. 잠시 후 다시 시도해 주세요."}
+                                                </span>
+                                                {process.env.NODE_ENV === "development" && error.cause && (
+                                                    <span className="text-[10px] opacity-70 font-mono">
+                                                        {String(error.cause)}
+                                                    </span>
+                                                )}
                                             </div>
                                         )}
                                     </div>
