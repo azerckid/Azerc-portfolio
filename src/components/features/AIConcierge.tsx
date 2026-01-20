@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
 import { cn } from "@/lib/utils";
 
 export function AIConcierge() {
@@ -18,12 +19,14 @@ export function AIConcierge() {
     const scrollRef = useRef<HTMLDivElement>(null);
 
     const chatResult = useChat({
-        api: "/api/chat",
-        initialMessages: [
+        transport: new DefaultChatTransport({
+            api: "/api/chat",
+        }),
+        messages: [
             {
                 id: "welcome",
                 role: "assistant",
-                content: "안녕하세요! Nam Hyeongseog(AZERC)의 포트폴리오에 오신 것을 환영합니다. 무엇을 도와드릴까요?",
+                parts: [{ type: "text", text: "안녕하세요! Nam Hyeongseog(AZERC)의 포트폴리오에 오신 것을 환영합니다. 무엇을 도와드릴까요?" }],
             },
         ],
         onError: (err) => {
@@ -34,24 +37,14 @@ export function AIConcierge() {
                 stack: err.stack
             });
         },
-        onResponse: (response) => {
-            console.log("AI Chat Response Status:", response.status);
-            if (!response.ok) {
-                console.error("AI Chat Response Error:", response.statusText);
-            }
-        }
     });
 
-    const { 
-        messages, 
+    const {
+        messages,
         sendMessage,
-        status, 
-        setMessages, 
+        status,
+        setMessages,
         error,
-        input,
-        setInput,
-        handleInputChange,
-        handleSubmit,
     } = chatResult;
 
     const isLoading = status === "submitted" || status === "streaming";
@@ -62,32 +55,9 @@ export function AIConcierge() {
 
         const userMessage = chatInput.trim();
         setChatInput("");
-        
+
         try {
-            // Use sendMessage (AI SDK v6+)
-            if (sendMessage && typeof sendMessage === 'function') {
-                await sendMessage({ text: userMessage });
-            }
-            // Fallback: use input + handleSubmit pattern
-            else if (setInput && typeof setInput === 'function' && handleSubmit && typeof handleSubmit === 'function') {
-                setInput(userMessage);
-                // Create a synthetic form event for handleSubmit
-                const syntheticEvent = {
-                    preventDefault: () => {},
-                    currentTarget: document.createElement('form'),
-                } as unknown as React.FormEvent<HTMLFormElement>;
-                
-                handleSubmit(syntheticEvent);
-            }
-            else {
-                console.error("No valid method to send message. useChat returned:", {
-                    hasSendMessage: typeof sendMessage === 'function',
-                    hasHandleSubmit: typeof handleSubmit === 'function',
-                    hasSetInput: typeof setInput === 'function',
-                    allKeys: Object.keys(chatResult),
-                });
-                throw new Error("Chat function is not available. Please refresh the page.");
-            }
+            await sendMessage({ text: userMessage });
         } catch (err: any) {
             console.error("Send Message Error:", err);
             console.error("Send Message Error Details:", {
@@ -99,6 +69,7 @@ export function AIConcierge() {
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (e.nativeEvent.isComposing) return;
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleLocalSubmit();
@@ -143,7 +114,7 @@ export function AIConcierge() {
                                     <Button
                                         size="icon"
                                         variant="ghost"
-                                        onClick={() => setMessages([{ id: "welcome", role: "assistant", content: "안녕하세요! Nam Hyeongseog(AZERC)의 포트폴리오에 오신 것을 환영합니다. 무엇을 도와드릴까요?" }])}
+                                        onClick={() => setMessages([{ id: "welcome", role: "assistant", parts: [{ type: "text", text: "안녕하세요! Nam Hyeongseog(AZERC)의 포트폴리오에 오신 것을 환영합니다. 무엇을 도와드릴까요?" }] }])}
                                         className="h-8 w-8 rounded-full text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100"
                                     >
                                         <RefreshCcw size={14} />
@@ -222,7 +193,7 @@ export function AIConcierge() {
                                                 <span className="leading-relaxed">
                                                     {error.message || "AI 서버와 연결할 수 없습니다. 잠시 후 다시 시도해 주세요."}
                                                 </span>
-                                                {process.env.NODE_ENV === "development" && error.cause && (
+                                                {process.env.NODE_ENV === "development" && !!error.cause && (
                                                     <span className="text-[10px] opacity-70 font-mono">
                                                         {String(error.cause)}
                                                     </span>
