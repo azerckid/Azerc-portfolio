@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 import { Header } from "@/components/shared/Header";
+import { AIConcierge } from "@/components/features/AIConcierge";
 
 export default function RootLayout({
   children,
@@ -27,6 +28,7 @@ export default function RootLayout({
         <div className="relative min-h-screen flex flex-col">
           <Header />
           {children}
+          <AIConcierge />
         </div>
       </body>
     </html>

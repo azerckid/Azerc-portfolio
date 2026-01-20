@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export function Header() {
     const [isScrolled, setIsScrolled] = useState(false);
@@ -45,18 +46,20 @@ export function Header() {
                             {link.name}
                         </Link>
                     ))}
-                    <button className="px-5 py-2 rounded-full bg-foreground text-background text-sm font-bold hover:scale-105 transition-transform">
+                    <Button variant="default" className="rounded-full font-bold transition-transform hover:scale-105">
                         Let's Talk
-                    </button>
+                    </Button>
                 </div>
 
                 {/* Mobile Menu Toggle */}
-                <button
-                    className="md:hidden p-2 glass rounded-lg"
+                <Button
+                    variant="outline"
+                    size="icon"
+                    className="md:hidden glass"
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 >
                     {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-                </button>
+                </Button>
             </nav>
 
             {/* Mobile Menu Overlay */}
@@ -79,9 +82,9 @@ export function Header() {
                                     {link.name}
                                 </Link>
                             ))}
-                            <button className="mt-2 w-full px-5 py-3 rounded-xl bg-primary text-background font-bold">
+                            <Button className="mt-2 w-full font-bold" size="lg">
                                 Let's Talk
-                            </button>
+                            </Button>
                         </div>
                     </motion.div>
                 )}
