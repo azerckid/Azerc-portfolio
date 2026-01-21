@@ -24,12 +24,12 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         >
             <Card className="group relative flex flex-col rounded-3xl overflow-hidden border border-glass-border bg-glass-bg backdrop-blur-md hover:border-primary/50 transition-all duration-500 h-full">
                 {/* Image Section */}
-                <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="relative aspect-[16/10] overflow-hidden bg-white">
                     <Image
                         src={project.thumbnailUrl}
                         alt={project.title}
                         fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="object-cover scale-110 transition-transform duration-700 group-hover:scale-125"
                     />
                     {/* Dark overlay removed to showcase bright illustrations */}
                     {/* <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-60" /> */}
