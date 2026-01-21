@@ -10,11 +10,11 @@ export async function POST(req: Request) {
     if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
       console.error("[API Chat] GOOGLE_GENERATIVE_AI_API_KEY is not set");
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           error: "API configuration error. Please check server logs.",
           details: "GOOGLE_GENERATIVE_AI_API_KEY environment variable is missing"
-        }), 
-        { 
+        }),
+        {
           status: 500,
           headers: { "Content-Type": "application/json" }
         }
@@ -27,15 +27,15 @@ export async function POST(req: Request) {
     console.log(`[API Chat] Received request. Request body keys:`, Object.keys(requestBody));
     console.log(`[API Chat] Messages type:`, Array.isArray(rawMessages) ? 'array' : typeof rawMessages);
     console.log(`[API Chat] Messages length:`, Array.isArray(rawMessages) ? rawMessages.length : 'N/A');
-    
+
     if (Array.isArray(rawMessages) && rawMessages.length > 0) {
       console.log(`[API Chat] First message sample:`, JSON.stringify(rawMessages[0], null, 2));
     }
 
     if (!rawMessages || !Array.isArray(rawMessages)) {
       return new Response(
-        JSON.stringify({ error: "Messages are required and must be an array" }), 
-        { 
+        JSON.stringify({ error: "Messages are required and must be an array" }),
+        {
           status: 400,
           headers: { "Content-Type": "application/json" }
         }
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
             .filter((part: any) => part.type === 'text' && part.text)
             .map((part: any) => part.text)
             .join(' ');
-          
+
           if (textParts.trim().length > 0) {
             return {
               role: msg.role || 'user',
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
             };
           }
         }
-        
+
         // Handle standard format with content
         if (msg.content && typeof msg.content === 'string' && msg.content.trim().length > 0) {
           return {
@@ -67,7 +67,7 @@ export async function POST(req: Request) {
             content: msg.content.trim()
           };
         }
-        
+
         // Handle text property (sendMessage format)
         if (msg.text && typeof msg.text === 'string' && msg.text.trim().length > 0) {
           return {
@@ -75,18 +75,20 @@ export async function POST(req: Request) {
             content: msg.text.trim()
           };
         }
-        
+
         return null;
       })
-      .filter((msg: any) => msg !== null && (msg.role === "user" || msg.role === "assistant"));
+      .filter((msg): msg is { role: "user" | "assistant"; content: string } =>
+        msg !== null && (msg.role === "user" || msg.role === "assistant")
+      );
 
     console.log(`[API Chat] Valid messages after processing: ${validMessages.length}`);
 
     if (validMessages.length === 0) {
       console.error(`[API Chat] No valid messages found. Raw messages:`, JSON.stringify(rawMessages, null, 2));
       return new Response(
-        JSON.stringify({ error: "No valid messages found" }), 
-        { 
+        JSON.stringify({ error: "No valid messages found" }),
+        {
           status: 400,
           headers: { "Content-Type": "application/json" }
         }
@@ -140,19 +142,19 @@ export async function POST(req: Request) {
         hasToTextStreamResponse: typeof (result as any).toTextStreamResponse === 'function',
         resultKeys: Object.keys(result).slice(0, 10), // First 10 keys
       });
-      
+
       // Check if toUIMessageStreamResponse exists (preferred method)
       if (typeof (result as any).toUIMessageStreamResponse === 'function') {
         console.log('[API Chat] Using toUIMessageStreamResponse');
         return (result as any).toUIMessageStreamResponse();
       }
-      
+
       // Fallback: try toDataStreamResponse
       if (typeof (result as any).toDataStreamResponse === 'function') {
         console.log('[API Chat] Using toDataStreamResponse as fallback');
         return (result as any).toDataStreamResponse();
       }
-      
+
       // Last resort: manual stream creation
       console.warn('[API Chat] Using manual stream creation');
       const encoder = new TextEncoder();
@@ -174,7 +176,7 @@ export async function POST(req: Request) {
           }
         }
       });
-      
+
       return new Response(dataStream, {
         headers: {
           'Content-Type': 'text/x-data-stream; charset=utf-8',
@@ -188,18 +190,18 @@ export async function POST(req: Request) {
   } catch (error: any) {
     console.error("[API Chat Error]:", error);
     console.error("[API Chat Error Stack]:", error.stack);
-    
+
     // Provide more detailed error information
     const errorMessage = error.message || "Internal Server Error";
     const isApiKeyError = errorMessage.includes("API key") || errorMessage.includes("GOOGLE");
-    
+
     return new Response(
-      JSON.stringify({ 
-        error: isApiKeyError 
+      JSON.stringify({
+        error: isApiKeyError
           ? "API 인증 오류가 발생했습니다. API 키를 확인해주세요."
           : "AI 서버와 통신 중 오류가 발생했습니다.",
         details: process.env.NODE_ENV === "development" ? errorMessage : undefined
-      }), 
+      }),
       {
         status: 500,
         headers: { "Content-Type": "application/json" }
