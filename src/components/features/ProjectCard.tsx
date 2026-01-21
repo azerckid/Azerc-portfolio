@@ -31,7 +31,8 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                         fill
                         className="object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-60" />
+                    {/* Dark overlay removed to showcase bright illustrations */}
+                    {/* <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-60" /> */}
 
                     {/* Category Badge */}
                     <div className="absolute top-4 left-4">
