@@ -56,5 +56,16 @@ export const PROJECTS: Project[] = [
         liveUrl: 'https://c-stay-blog-01.vercel.app/',
         techStack: ['Next.js 15', 'React Router v7', 'Lucide', 'Better Auth'],
         features: ['SSR Optimization', 'Rich Content Management', 'Modern Authentication']
+    },
+    {
+        id: 'ai-agent-studio',
+        title: 'AI Agent Studio',
+        category: 'AI',
+        description: 'Autonomous AI experimentation lab with 20+ specialized agents built on LangGraph.',
+        longDescription: 'A comprehensive portfolio showcasing autonomous AI agent workflows. It features specialized agents for research, data harvesting, and financial analysis using Gemini 1.5 Flash and LangGraph.',
+        thumbnailUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop',
+        liveUrl: 'https://langgraph-lab-eight.vercel.app/',
+        techStack: ['LangGraph', 'Gemini 1.5 Flash', 'CrewAI', 'AutoGen', 'Python'],
+        features: ['20+ Specialized Agents', 'Deep Research Workflows', 'Multi-Agent Collaboration']
     }
 ];

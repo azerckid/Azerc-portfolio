@@ -99,7 +99,7 @@ export default function Home() {
               Expertise in modern frontend frameworks, scalable backend architectures, and specialized technology integrations.
             </p>
             <div className="flex flex-wrap gap-3 mt-4">
-              {["Next.js 15", "React Router v7", "TypeScript", "Tailwind CSS v4", "Solidity", "Three.js", "AI SDK", "Drizzle ORM", "Better Auth"].map((skill) => (
+              {["Next.js 15", "React Router v7", "TypeScript", "Tailwind CSS v4", "Solidity", "Three.js", "LangGraph", "AI SDK", "Drizzle ORM", "Better Auth"].map((skill) => (
                 <Badge key={skill} variant="secondary" className="px-4 py-1 rounded-full text-xs font-medium bg-secondary/10 text-secondary border border-secondary/20">
                   {skill}
                 </Badge>

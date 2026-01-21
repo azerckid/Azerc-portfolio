@@ -24,6 +24,10 @@
         "content": "A high-performance content platform built using Next.js 15, optimized for SEO, speed, and premium readability."
     },
     {
+        "source": "Project: AI Agent Studio (LangGraph Lab)",
+        "content": "AI Agent Studio is a centralized laboratory for developing and mastering autonomous AI agents. It features over 20 distinct projects demonstrating various agentic workflows using LangGraph, CrewAI, and AutoGen. Key agents include a News Reader, Job Hunter, and Deep Research Clone. The tech stack focuses on Google Gemini (including Gemini 1.5 Flash), Python, and sophisticated web scraping tools like Firecrawl."
+    },
+    {
         "source": "Investment Flow (BondBase)",
         "content": "The investment process in BondBase follows a structured flow: 1. Faucet (for test assets) -> 2. Bond Market exploration -> 3. Investment execution. Users can track their portfolio and impact map."
     }
