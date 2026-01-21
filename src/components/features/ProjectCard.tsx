@@ -22,14 +22,14 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
         >
-            <Card className="group relative flex flex-col rounded-3xl overflow-hidden border border-glass-border bg-glass-bg backdrop-blur-md hover:border-primary/50 transition-all duration-500 h-full">
-                {/* Image Section */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-white">
+            <Card className="group relative flex flex-col p-0 rounded-3xl overflow-hidden border border-glass-border bg-glass-bg backdrop-blur-md hover:border-primary/50 transition-all duration-500 h-full">
+                {/* Image Section - Forced to Top */}
+                <div className="relative w-full aspect-[16/10] overflow-hidden bg-white mt-0 border-b border-glass-border/30">
                     <Image
                         src={project.thumbnailUrl}
                         alt={project.title}
                         fill
-                        className="object-cover scale-110 transition-transform duration-700 group-hover:scale-125"
+                        className="object-cover scale-150 transition-transform duration-700 group-hover:scale-160 object-center"
                     />
                     {/* Dark overlay removed to showcase bright illustrations */}
                     {/* <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-60" /> */}
