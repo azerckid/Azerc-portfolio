@@ -47,6 +47,17 @@ export const PROJECTS: Project[] = [
         features: ['Blockchain Transparency', 'ESG Scoring Engine', 'Real-time Relayer Sync']
     },
     {
+        id: 'choonsim-metaverse',
+        title: 'MOGAME Metaverse',
+        category: '3D',
+        description: 'Next-Generation 3D Virtual Social Space built with Next.js 15 & Three.js.',
+        longDescription: 'A comprehensive 3D metaverse platform featuring interactive social spaces. Leveraging Next.js 15 and Three.js for a seamless, high-performance web-based virtual reality experience.',
+        thumbnailUrl: '/assets/illustrations/ai-choonsim.png',
+        liveUrl: 'https://choonsim-metaverse.vercel.app/',
+        techStack: ['Next.js 15', 'Three.js', 'React Three Fiber', 'Tailwind CSS'],
+        features: ['Virtual Social Space', '3D Avatar Interaction', 'Next-Gen Graphics']
+    },
+    {
         id: 'threejs-lab',
         title: 'Three.js Graphics Lab',
         category: '3D',
