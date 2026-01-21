@@ -14,7 +14,7 @@ export interface Project {
 export const PROJECTS: Project[] = [
     {
         id: 'ai-agent-studio',
-        title: 'AI Agent Studio',
+        title: 'AI Agent Lab.',
         category: 'AI',
         description: 'Autonomous AI experimentation lab with 20+ specialized agents built on LangGraph.',
         longDescription: 'A comprehensive portfolio showcasing autonomous AI agent workflows. It features specialized agents for research, data harvesting, and financial analysis using Gemini 1.5 Flash and LangGraph.',
@@ -29,10 +29,21 @@ export const PROJECTS: Project[] = [
         category: 'AI',
         description: 'Intelligent AI assistant platform with personalized chat experiences and LLM integration.',
         longDescription: 'A modern AI chatbot implementation utilizing Vercel AI SDK and advanced LLMs. Optimized for low-latency streaming responses and intuitive UI/UX for complex task management.',
-        thumbnailUrl: '/assets/illustrations/ai-choonsim.png',
+        thumbnailUrl: '/assets/illustrations/choonsim_10.jpg',
         liveUrl: 'https://chat-bot-choonsim.vercel.app/home',
         techStack: ['Next.js', 'Vercel AI SDK', 'OpenAI', 'Tailwind CSS'],
         features: ['Real-time Streaming', 'Context-aware Conversations', 'Custom UI Personas']
+    },
+    {
+        id: 'c-stay-blog',
+        title: 'AI-Tweet',
+        category: 'AI',
+        description: 'High-performance content delivery platform with modern state management.',
+        longDescription: 'A full-stack blog platform showcasing the transition from React to React Router v7 and Next.js 15 architectures. Optimized for SEO and fast server-side rendering.',
+        thumbnailUrl: '/assets/illustrations/fullstack-blog.png',
+        liveUrl: 'https://c-stay-blog-01.vercel.app/',
+        techStack: ['Next.js 15', 'React Router v7', 'Lucide', 'Better Auth'],
+        features: ['SSR Optimization', 'Rich Content Management', 'Modern Authentication']
     },
     {
         id: 'bondbase',
@@ -67,16 +78,5 @@ export const PROJECTS: Project[] = [
         liveUrl: 'https://threejs-lab-orcin.vercel.app/',
         techStack: ['Three.js', 'React Three Fiber', 'Shaders', 'Next.js'],
         features: ['Real-time 3D Rendering', 'Procedural Grass System', 'Character Animation Rigging']
-    },
-    {
-        id: 'c-stay-blog',
-        title: 'C-Stay Blog Ecosystem',
-        category: 'Full-Stack',
-        description: 'High-performance content delivery platform with modern state management.',
-        longDescription: 'A full-stack blog platform showcasing the transition from React to React Router v7 and Next.js 15 architectures. Optimized for SEO and fast server-side rendering.',
-        thumbnailUrl: '/assets/illustrations/fullstack-blog.png',
-        liveUrl: 'https://c-stay-blog-01.vercel.app/',
-        techStack: ['Next.js 15', 'React Router v7', 'Lucide', 'Better Auth'],
-        features: ['SSR Optimization', 'Rich Content Management', 'Modern Authentication']
     }
 ];

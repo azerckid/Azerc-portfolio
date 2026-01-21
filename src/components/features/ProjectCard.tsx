@@ -1,7 +1,7 @@
 "use client"
 
 import { Project } from "@/constants/projects";
-import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import { ExternalLink, Github, ArrowRight, Twitter } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -29,7 +29,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                         src={project.thumbnailUrl}
                         alt={project.title}
                         fill
-                        className="object-cover scale-150 transition-transform duration-700 group-hover:scale-160 object-center"
+                        className="object-cover scale-100 transition-transform duration-700 group-hover:scale-110 object-center"
                     />
                     {/* Dark overlay removed to showcase bright illustrations */}
                     {/* <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-60" /> */}
@@ -43,8 +43,11 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                 </div>
 
                 <CardHeader className="p-6 pb-2">
-                    <h3 className="text-xl font-bold group-hover:text-primary transition-colors">
+                    <h3 className="text-xl font-bold group-hover:text-primary transition-colors flex items-center gap-2">
                         {project.title}
+                        {project.id === 'c-stay-blog' && (
+                            <Twitter size={20} className="text-blue-400 fill-current" />
+                        )}
                     </h3>
                 </CardHeader>
 
