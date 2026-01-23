@@ -18,6 +18,29 @@ export default function Home() {
     window.dispatchEvent(event);
   };
 
+  const SKILL_GROUPS = [
+    {
+      name: "AI Intelligence",
+      icon: <Zap size={18} className="text-primary" />,
+      skills: ["LangGraph", "AI SDK", "Gemini API", "Vector DB"]
+    },
+    {
+      name: "On-Chain System",
+      icon: <ShieldCheck size={18} className="text-secondary" />,
+      skills: ["Solidity", "Smart Contract", "Ethers.js", "Foundry"]
+    },
+    {
+      name: "Immersive 3D",
+      icon: <Globe2 size={18} className="text-accent" />,
+      skills: ["Three.js", "R3F", "GLSL", "Framer Motion"]
+    },
+    {
+      name: "Core Architecture",
+      icon: <Layers size={18} className="text-foreground/80" />,
+      skills: ["Next.js 15", "TypeScript", "Drizzle ORM", "Better Auth"]
+    }
+  ];
+
   return (
     <div className="flex flex-col w-full overflow-hidden">
       {/* Hero Section */}
@@ -94,29 +117,59 @@ export default function Home() {
 
       {/* Full-Stack Capabilities Section */}
       <section id="skills" className="w-full max-w-7xl mx-auto px-6 py-32 border-t border-glass-border/30">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div className="flex flex-col gap-6">
-            <Badge variant="outline" className="w-fit border-secondary/30 text-secondary">CAPABILITIES</Badge>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-              Technical <br />
-              <span className="text-secondary italic">Excellence</span>
-            </h2>
-            <p className="text-foreground/60 text-lg leading-relaxed">
-              Expertise in modern frontend frameworks, scalable backend architectures, and specialized technology integrations.
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-4">
+              <Badge variant="outline" className="w-fit border-secondary/30 text-secondary">CAPABILITIES</Badge>
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight leading-[1.1]">
+                Technical <br />
+                <span className="text-secondary italic">Excellence</span>
+              </h2>
+            </div>
+            <p className="text-foreground/60 text-lg leading-relaxed max-w-xl">
+              단일 스택에 국한되지 않는 융합적 기술 설계. <br />
+              복잡한 비즈니스 로직을 현대적인 엔지니어링으로 풀어냅니다.
             </p>
-            <div className="flex flex-wrap gap-3 mt-4">
-              {["Next.js 15", "React Router v7", "TypeScript", "Tailwind CSS v4", "Solidity", "Three.js", "LangGraph", "AI SDK", "Drizzle ORM", "Better Auth"].map((skill) => (
-                <Badge key={skill} variant="secondary" className="px-4 py-1 rounded-full text-xs font-medium bg-secondary/10 text-secondary border border-secondary/20">
-                  {skill}
-                </Badge>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+              {SKILL_GROUPS.map((group) => (
+                <div key={group.name} className="flex flex-col gap-4 p-5 glass rounded-2xl border-white/5 group hover:border-secondary/20 transition-all">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-white/5 text-secondary group-hover:scale-110 transition-transform">
+                      {group.icon}
+                    </div>
+                    <h4 className="font-bold text-sm tracking-tight">{group.name}</h4>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {group.skills.map((skill) => (
+                      <span key={skill} className="text-[11px] font-mono px-2 py-1 rounded bg-white/5 opacity-50 border border-white/5">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
-          <div className="glass rounded-[2rem] p-10 h-[400px] flex items-center justify-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 to-transparent" />
-            <div className="relative z-10 text-center">
-              <Globe2 size={80} className="mx-auto mb-6 text-secondary animate-pulse" />
-              <p className="text-sm font-mono opacity-50">SCALABLE ARCHITECTURE</p>
+
+          <div className="glass rounded-[3rem] p-10 h-[500px] flex items-center justify-center relative overflow-hidden self-center border-white/5">
+            <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 via-transparent to-primary/5" />
+
+            {/* Decorative Orbit Rings */}
+            <div className="absolute w-[300px] h-[300px] border border-white/5 rounded-full animate-[spin_20s_linear_infinite]" />
+            <div className="absolute w-[400px] h-[400px] border border-dashed border-white/10 rounded-full animate-[spin_30s_linear_infinite_reverse]" />
+
+            <div className="relative z-10 text-center flex flex-col items-center">
+              <div className="w-24 h-24 rounded-full glass border-white/10 flex items-center justify-center mb-8 animate-pulse shadow-[0_0_50px_rgba(var(--secondary),0.2)]">
+                <Globe2 size={48} className="text-secondary" />
+              </div>
+              <h3 className="text-xl font-bold tracking-widest mb-2">TECHNICAL NEXUS</h3>
+              <p className="text-[10px] font-mono opacity-40 uppercase tracking-[0.3em]">Scalable Architecture Optimized</p>
+
+              {/* Floating Tech Dots */}
+              <div className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full bg-primary/40 animate-ping" />
+              <div className="absolute bottom-1/3 right-1/4 w-2 h-2 rounded-full bg-secondary/40 animate-ping [animation-delay:1s]" />
+              <div className="absolute top-2/3 left-1/2 w-1.5 h-1.5 rounded-full bg-accent/40 animate-ping [animation-delay:2s]" />
             </div>
           </div>
         </div>
