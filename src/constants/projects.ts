@@ -17,11 +17,12 @@ export const PROJECTS: Project[] = [
         title: 'AI Agent Lab.',
         category: 'AI',
         description: 'Autonomous AI experimentation lab with 20+ specialized agents built on LangGraph.',
-        longDescription: 'A comprehensive portfolio showcasing autonomous AI agent workflows. It features specialized agents for research, data harvesting, and financial analysis using Gemini 1.5 Flash and LangGraph.',
+        longDescription: 'A comprehensive archive of 20+ specialized AI agent projects featuring a unified dashboard interface. Integrating the latest AI stack including LangGraph, OpenAI, and Gemini, it offers a "Laboratory UI" for monitoring code logic and real-time agent status. Features automated project scanning and a sophisticated design system.',
         thumbnailUrl: '/assets/illustrations/ai-studio.png',
         liveUrl: 'https://langgraph-lab-eight.vercel.app/',
-        techStack: ['LangGraph', 'Gemini 1.5 Flash', 'CrewAI', 'AutoGen', 'Python'],
-        features: ['20+ Specialized Agents', 'Deep Research Workflows', 'Multi-Agent Collaboration']
+        repoUrl: 'https://github.com/azerckid/Langgraph-lab',
+        techStack: ['React 19', 'Vite', 'Tailwind CSS 4', 'LangGraph', 'Python', 'OpenAI', 'Gemini'],
+        features: ['20+ Specialized Agents', 'Automated Project Scanning', 'In-browser Code Viewer', 'Real-time Metadata Sync', 'Premium Laboratory UI']
     },
     {
         id: 'chat-bot-choonsim',
