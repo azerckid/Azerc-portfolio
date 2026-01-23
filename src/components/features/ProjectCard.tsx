@@ -61,7 +61,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                         </div>
                     </div>
 
-                    <CardHeader className="p-6 pb-2">
+                    <CardHeader className="p-6 pt-0 pb-0">
                         <h3 className="text-xl font-bold group-hover:text-primary transition-colors flex items-center gap-2">
                             {project.title}
                             {project.id === 'c-stay-blog' && (
@@ -71,7 +71,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                     </CardHeader>
 
                     <CardContent className="p-6 pt-0 pb-0">
-                        <p className="text-sm text-foreground/60 line-clamp-2 mb-4">
+                        <p className="text-sm text-foreground/60 line-clamp-2 mb-4 h-10 min-h-[2.5rem]">
                             {project.description}
                         </p>
 
@@ -96,7 +96,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
                         {/* Project Stats - Integrated with bottom bar */}
                         {project.stats && (
-                            <div className="mt-6 pt-6 border-t border-glass-border/10 grid grid-cols-3 gap-4">
+                            <div className="mt-2 pt-2 border-t border-glass-border/10 grid grid-cols-3 gap-4">
                                 {project.stats.map((stat, i) => (
                                     <div key={i} className="flex flex-col items-center gap-0.5 text-center">
                                         <span className="text-[10px] uppercase tracking-wider text-foreground/30 font-bold">
@@ -111,7 +111,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
                         )}
                     </CardContent>
 
-                    <CardFooter className="p-6 pt-0 border-t border-glass-border/10">
+                    <CardFooter className="px-6 !pt-0 pb-2 border-t border-glass-border/10">
                         <div className="flex items-center justify-between w-full">
                             <div className="flex items-center gap-6">
                                 <Link
