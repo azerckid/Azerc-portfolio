@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, Code2, Cpu, Globe2 } from "lucide-react";
+import { ArrowRight, Code2, Cpu, Globe2, Zap, ShieldCheck, Layers } from "lucide-react";
 import { PROJECTS } from "@/constants/projects";
 import { ProjectCard } from "@/components/features/ProjectCard";
 import dynamic from "next/dynamic";
@@ -12,6 +12,12 @@ const Background3D = dynamic(() => import("@/components/shared/Background3D"), {
 });
 
 export default function Home() {
+  const triggerConsultation = (category: string) => {
+    const message = `[${category}] 분야에 대한 전문 상담을 진행하고 싶습니다. 관련 기술셋과 협업 프로세스에 대해 알려주세요.`;
+    const event = new CustomEvent("open-ai-concierge", { detail: { message } });
+    window.dispatchEvent(event);
+  };
+
   return (
     <div className="flex flex-col w-full overflow-hidden">
       {/* Hero Section */}
@@ -136,8 +142,8 @@ export default function Home() {
               </p>
 
               <div className="flex flex-col gap-4 mt-4">
-                <a href="mailto:azerc@example.com" className="text-xl font-medium hover:text-primary transition-colors flex items-center gap-2">
-                  azerc@example.com <ArrowRight size={20} className="-rotate-45" />
+                <a href="mailto:azerckid@gmail.com" className="text-xl font-medium hover:text-primary transition-colors flex items-center gap-2">
+                  azerckid@gmail.com <ArrowRight size={20} className="-rotate-45" />
                 </a>
                 <div className="flex gap-4">
                   {["GitHub", "LinkedIn", "Twitter"].map((social) => (
@@ -149,24 +155,50 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex flex-col gap-4 p-8 glass rounded-3xl border-white/5">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-mono opacity-50">NAME</label>
-                  <input type="text" className="bg-white/5 border border-white/10 rounded-xl p-3 text-sm focus:outline-none focus:border-primary/50" placeholder="Your Name" />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label className="text-xs font-mono opacity-50">EMAIL</label>
-                  <input type="email" className="bg-white/5 border border-white/10 rounded-xl p-3 text-sm focus:outline-none focus:border-primary/50" placeholder="Email Address" />
-                </div>
+            <div className="grid grid-cols-1 gap-4">
+              {[
+                {
+                  id: "ai",
+                  title: "AI Intelligent Agent",
+                  description: "LangGraph 및 LLM 통합 에이전트 구축 상담",
+                  icon: <Zap size={24} className="text-primary" />,
+                  color: "border-primary/20 bg-primary/5 hover:border-primary/50"
+                },
+                {
+                  id: "web3",
+                  title: "Web3 & Blockchain",
+                  description: "스마트 컨트랙트 및 온체인 인프라 설계 지문",
+                  icon: <ShieldCheck size={24} className="text-secondary" />,
+                  color: "border-secondary/20 bg-secondary/5 hover:border-secondary/50"
+                },
+                {
+                  id: "fullstack",
+                  title: "Modern Full-Stack",
+                  description: "고성능 UI/UX 및 차세대 프레임워크 도입 전략",
+                  icon: <Layers size={24} className="text-accent" />,
+                  color: "border-accent/20 bg-accent/5 hover:border-accent/50"
+                }
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => triggerConsultation(item.title)}
+                  className={`flex items-center gap-6 p-6 rounded-2xl border transition-all duration-300 text-left group ${item.color}`}
+                >
+                  <div className="w-12 h-12 rounded-xl glass flex items-center justify-center group-hover:scale-110 transition-transform">
+                    {item.icon}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-lg">{item.title}</h4>
+                    <p className="text-sm opacity-60">{item.description}</p>
+                  </div>
+                  <ArrowRight size={20} className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                </button>
+              ))}
+
+              <div className="mt-4 p-6 rounded-2xl border border-dashed border-white/10 flex items-center justify-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-xs font-mono opacity-50 uppercase tracking-widest">AI Agent is ready for Briefing</span>
               </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-mono opacity-50">MESSAGE</label>
-                <textarea rows={4} className="bg-white/5 border border-white/10 rounded-xl p-3 text-sm focus:outline-none focus:border-primary/50 resize-none" placeholder="Tell me about your project" />
-              </div>
-              <Button size="lg" className="w-full mt-4 rounded-xl font-bold text-lg">
-                Send Message
-              </Button>
             </div>
           </div>
         </div>

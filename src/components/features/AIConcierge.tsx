@@ -77,6 +77,22 @@ export function AIConcierge() {
     };
 
     useEffect(() => {
+        const handleOpenConcierge = (event: any) => {
+            const { message } = event.detail || {};
+            setIsOpen(true);
+            if (message) {
+                // 부드러운 전환을 위해 약간의 지연 후 메시지 전송
+                setTimeout(() => {
+                    sendMessage({ text: message });
+                }, 500);
+            }
+        };
+
+        window.addEventListener("open-ai-concierge", handleOpenConcierge);
+        return () => window.removeEventListener("open-ai-concierge", handleOpenConcierge);
+    }, [sendMessage]);
+
+    useEffect(() => {
         if (scrollRef.current) {
             const scrollContainer = scrollRef.current.querySelector('[data-radix-scroll-area-viewport]');
             if (scrollContainer) {
