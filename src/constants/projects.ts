@@ -19,17 +19,17 @@ export const PROJECTS: Project[] = [
         id: 'ai-agent-studio',
         title: 'AI Agent Lab.',
         category: 'AI',
-        description: 'LangGraph, CrewAI, Gemini 등 최첨단 에이전트 프레임워크를 활용하여 개발된 20개 이상의 실전 AI 프로젝트 아카이브입니다. 자율 에이전트의 사고 과정(Chain-of-Thought)을 시각화하고 코드 로직을 실시간으로 분석할 수 있는 통합 엔지니어링 대시보드를 제공합니다.',
-        longDescription: '최신 AI 에이전트 기술의 정점을 실험하는 종합 아카이브입니다. LangGraph의 순환 그래프 제어, CrewAI의 멀티 에이전트 협업, Gemini 및 OpenAI의 멀티모달 기능을 모두 포함합니다. React 19와 Tailwind v4 기반의 "실험실 대시보드"를 통해 실시간 상태 모니터링과 코드 로직 분석(Code Browser)이 가능한 연구 플랫폼입니다.',
+        description: 'LangGraph, CrewAI 등 최첨단 프레임워크와 Turso 벡터 DB 기반의 RAG 시스템을 결합한 24개 이상의 AI 프로젝트 아카이브입니다. 전체 코드베이스를 분석하여 최적의 솔루션을 제시하는 지능형 AI 검색 엔진을 탑재했습니다.',
+        longDescription: '최신 AI 에이전트 기술의 정점을 실험하는 종합 플랫폼입니다. LangGraph의 순환 그래프 제어와 CrewAI의 협업 모델을 넘어, Turso(Vector Search)와 Gemini 2.0 Flash를 연동한 실전 RAG 시스템을 구축했습니다. 이를 통해 24개 프로젝트의 소스코드와 문서를 실시간으로 검색하고 답변을 생성하는 "지능형 어시스턴트" 기능을 제공하며, React 19와 Tailwind v4 기반의 대시보드에서 모든 로직을 투명하게 분석할 수 있습니다.',
         thumbnailUrl: '/assets/illustrations/ai-studio.png',
         liveUrl: 'https://langgraph-lab-eight.vercel.app/',
         repoUrl: 'https://github.com/azerckid/Langgraph-lab',
-        techStack: ['LangGraph', 'CrewAI', 'Google Gemini', 'OpenAI', 'Python', 'React 19', 'Tailwind CSS 4'],
-        features: ['20+ Specialized Agents', 'Multi-Model Ecosystem', 'Cyclic State Graph', 'Interactive Code Browser', 'Automated Project Scanning'],
+        techStack: ['Turso (Vector DB)', 'RAG System', 'Gemini 2.0 Flash', 'LangGraph', 'CrewAI', 'Python', 'React 19', 'Tailwind CSS 4'],
+        features: ['AI-powered RAG Search', '24+ Specialized Agents', 'Interactive Code Browser', 'Vector Knowledge Base', 'Automated Project Scanning'],
         stats: [
             { label: 'Agents', value: '24+' },
-            { label: 'Models', value: 'Multi' },
-            { label: 'Runtime', value: 'Edge' }
+            { label: 'Search', value: 'Semantic' },
+            { label: 'Model', value: 'Gemini 2.0' }
         ]
     },
     {
