@@ -8,6 +8,8 @@ export interface Project {
     liveUrl: string;
     repoUrl?: string;
     techStack: string[];
+    frontendTech?: string[];
+    backendTech?: string[];
     features: string[];
     stats?: { label: string; value: string }[];
 }
@@ -39,7 +41,7 @@ export const PROJECTS: Project[] = [
         thumbnailUrl: '/assets/illustrations/choonsim_10.jpg',
         liveUrl: 'https://chat-bot-choonsim.vercel.app/home',
         repoUrl: 'https://github.com/azerckid/CHAT_BOT_choonsim',
-        techStack: ['LangGraph', 'Next.js', 'Vercel AI SDK', 'Blockchain X402', 'NEAR Protocol', 'OpenAI'],
+        techStack: ['LangGraph', 'NEAR Protocol', 'Blockchain X402', 'Google Generative AI', 'React Router v7', 'Zod', 'Tailwind CSS 4'],
         features: ['LangGraph Agent Workflow', 'X402 Payment System', 'Persona-based AI Chat', 'Real-time Streaming', 'Web3 Wallet Connectivity'],
         stats: [
             { label: 'Engine', value: 'LangGraph' },
@@ -56,7 +58,7 @@ export const PROJECTS: Project[] = [
         thumbnailUrl: '/assets/illustrations/fullstack-blog.png',
         liveUrl: 'https://c-stay-blog-01.vercel.app/',
         repoUrl: 'https://github.com/azerckid/C_Stay-blog-01',
-        techStack: ['Next.js 15', 'React Router v7', 'AI Content Assist', 'Lucide', 'Better Auth'],
+        techStack: ['React Router v7', 'AI Content Assist', 'Lucide', 'Better Auth', 'Tailwind CSS 4'],
         features: ['AI Writing Assistant', 'SEO Optimized SSR', 'Modern Rich Text Editor', 'Hybrid Routing Architecture'],
         stats: [
             { label: 'SEO', value: '99+' },
@@ -74,6 +76,8 @@ export const PROJECTS: Project[] = [
         liveUrl: 'https://blockchain-bond-base.vercel.app/',
         repoUrl: 'https://github.com/namhyeongseog/BLOCKCHAIN_BOND-BASE',
         techStack: ['Solidity', 'Ethers.js', 'React Router v7', 'Smart Contracts', 'Drizzle ORM'],
+        frontendTech: ['React Router v7', 'Drizzle ORM', 'Zod', 'Tailwind CSS 4'],
+        backendTech: ['Solidity', 'Ethers.js', 'Smart Contracts'],
         features: ['On-chain ESG Tracking', 'Automated Relayer Sync', 'Transparent Ledger', 'Smart Contract Audited'],
         stats: [
             { label: 'Audit', value: 'Passed' },
