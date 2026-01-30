@@ -124,7 +124,7 @@ export async function POST(req: Request) {
     console.log(`[API Chat] Processing ${validMessages.length} valid messages`);
 
     const result = await streamText({
-      model: google("gemini-2.0-flash-exp"),
+      model: google("gemini-2.5-flash"),
       system: systemPrompt,
       messages: validMessages,
       experimental_transform: smoothStream({ delayInMs: 50 }),
